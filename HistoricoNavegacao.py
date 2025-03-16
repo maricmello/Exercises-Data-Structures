@@ -1,77 +1,77 @@
-class No:
+class Node:
     """
-    Representa um nó individual em uma estrutura de dados encadeada.
-    Cada nó contém um valor e uma referência para o próximo nó na lista.
+    Represents an individual node in a linked data structure.
+    Each node contains a value and a reference to the next node in the list.
     """
-    def __init__(self, valor):
-        self.valor = valor  # Armazena o valor (URL, neste caso)
-        self.proximo = None  # Referência para o próximo nó (inicialmente é None)
+    def __init__(self, value):
+        self.value = value  # Stores the value (URL, in this case)
+        self.next = None  # Reference to the next node (initially None)
 
-class HistoricoNavegacao:
+class NavigationHistory:
     """
-    Implementa uma pilha para gerenciar o histórico de navegação.
-    O comportamento é LIFO (Last In, First Out), típico de pilhas.
+    Implements a stack to manage navigation history.
+    The behavior is LIFO (Last In, First Out), typical of stacks.
     """
 
     def __init__(self):
         """
-        Inicializa o histórico de navegação.
+        Initializes the navigation history.
         """
-        self.topo = None  # Referência para o topo da pilha
-        self.tamanho = 0  # Número de elementos na pilha
+        self.top = None  # Reference to the top of the stack
+        self.size = 0  # Number of elements in the stack
 
-    def visitar_pagina(self, url):
+    def visit_page(self, url):
         """
-        Adiciona uma nova página ao histórico de navegação.
+        Adds a new page to the navigation history.
         
-        Parâmetro:
-        - url: A URL da página a ser adicionada.
+        Parameter:
+        - url: The URL of the page to be added.
         """
-        novo_no = No(url)  # Cria um novo nó com a URL fornecida
-        novo_no.proximo = self.topo  # O próximo nó do novo nó é o atual topo
-        self.topo = novo_no  # Atualiza o topo para o novo nó
-        self.tamanho += 1  # Incrementa o tamanho da pilha
+        new_node = Node(url)  # Creates a new node with the provided URL
+        new_node.next = self.top  # The next node of the new node is the current top
+        self.top = new_node  # Updates the top to the new node
+        self.size += 1  # Increments the size of the stack
 
-    def voltar(self):
+    def go_back(self):
         """
-        Remove e retorna a página atual do topo do histórico.
-        Se não houver páginas, retorna uma mensagem informativa.
+        Removes and returns the current page from the top of the history.
+        If there are no pages, returns an informational message.
         
-        Retorno:
-        - URL da página removida ou mensagem se a pilha estiver vazia.
+        Return:
+        - The URL of the removed page or a message if the stack is empty.
         """
-        if self.esta_vazia():
-            return "Não há mais páginas para voltar."
-        valor_removido = self.topo.valor  # Armazena o valor do topo para retornar
-        self.topo = self.topo.proximo  # Atualiza o topo para o próximo nó
-        self.tamanho -= 1  # Decrementa o tamanho da pilha
-        return valor_removido
+        if self.is_empty():
+            return "There are no more pages to go back."
+        removed_value = self.top.value  # Stores the value of the top to return
+        self.top = self.top.next  # Updates the top to the next node
+        self.size -= 1  # Decrements the size of the stack
+        return removed_value
 
-    def esta_vazia(self):
+    def is_empty(self):
         """
-        Verifica se o histórico de navegação está vazio.
+        Checks if the navigation history is empty.
         
-        Retorno:
-        - True se estiver vazio, False caso contrário.
+        Return:
+        - True if empty, False otherwise.
         """
-        return self.topo is None
+        return self.top is None
 
-    def pagina_atual(self):
+    def current_page(self):
         """
-        Retorna a página no topo do histórico sem removê-la.
+        Returns the page at the top of the history without removing it.
         
-        Retorno:
-        - URL da página atual ou mensagem se a pilha estiver vazia.
+        Return:
+        - The URL of the current page or a message if the stack is empty.
         """
-        if self.esta_vazia():
-            return "Não há nenhuma página para ser visualizada."
-        return self.topo.valor
+        if self.is_empty():
+            return "There is no page to be viewed."
+        return self.top.value
 
-    def exibir_historico(self):
+    def display_history(self):
         """
-        Exibe todas as páginas no histórico, começando pela mais recente.
+        Displays all pages in the history, starting from the most recent.
         """
-        atual = self.topo  # Começa do topo da pilha
-        while atual is not None:  # Itera enquanto houver nós na pilha
-            print(atual.valor)  # Exibe o valor do nó atual
-            atual = atual.proximo  # Move para o próximo nó
+        current = self.top  # Start from the top of the stack
+        while current is not None:  # Iterates while there are nodes in the stack
+            print(current.value)  # Displays the value of the current node
+            current = current.next  # Moves to the next node
