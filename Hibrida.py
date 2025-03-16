@@ -1,112 +1,112 @@
-class No:
+class Node:
     """
-    Classe que representa um nó de uma estrutura encadeada.
-    Cada nó contém um valor e uma referência para o próximo nó.
+    Class that represents a node in a linked structure.
+    Each node contains a value and a reference to the next node.
     """
-    def __init__(self, valor):
-        self.valor = valor  # Valor armazenado no nó
-        self.proximo = None  # Referência para o próximo nó (inicialmente None)
+    def __init__(self, value):
+        self.value = value  # Value stored in the node
+        self.next = None  # Reference to the next node (initially None)
 
 
-class Hibrida:
+class Hybrid:
     """
-    Classe que implementa uma estrutura híbrida, funcionando como:
-    - Pilha (LIFO - Last In, First Out)
-    - Fila (FIFO - First In, First Out)
+    Class that implements a hybrid structure, functioning as:
+    - Stack (LIFO - Last In, First Out)
+    - Queue (FIFO - First In, First Out)
     """
-    def __init__(self, tipo):
+    def __init__(self, type):
         """
-        Inicializa a estrutura híbrida.
+        Initializes the hybrid structure.
 
-        Parâmetro:
-        - tipo: Deve ser "fila" ou "pilha", indicando o comportamento desejado.
+        Parameter:
+        - type: Must be "queue" or "stack", indicating the desired behavior.
         """
-        self.tipo = tipo  # Define se a estrutura é uma pilha ou uma fila
-        if tipo not in ["fila", "pilha"]:
-            raise ValueError("Erro: o tipo deve ser 'fila' ou 'pilha'.")
+        self.type = type  # Defines whether the structure is a stack or a queue
+        if type not in ["queue", "stack"]:
+            raise ValueError("Error: the type must be 'queue' or 'stack'.")
         
-        self.frente = None  # Referência ao primeiro elemento da estrutura
-        self.tras = None  # Referência ao último elemento (usado apenas na fila)
+        self.front = None  # Reference to the first element of the structure
+        self.rear = None  # Reference to the last element (used only in the queue)
         
-        if self.tipo == "pilha":
-            self.tamanho = 0  # Usado apenas na pilha para rastrear o tamanho
+        if self.type == "stack":
+            self.size = 0  # Used only in the stack to track the size
 
-    def colocar(self, valor):
+    def add(self, value):
         """
-        Adiciona um novo elemento à estrutura.
+        Adds a new element to the structure.
 
-        Parâmetro:
-        - valor: O valor a ser adicionado.
+        Parameter:
+        - value: The value to be added.
         """
-        novo_no = No(valor)  # Cria um novo nó com o valor fornecido
-        if self.tipo == "pilha":  # Comportamento da pilha (LIFO)
-            novo_no.proximo = self.frente  # O próximo nó do novo nó será o topo atual
-            self.frente = novo_no  # Atualiza o topo para o novo nó
-            self.tamanho += 1  # Incrementa o tamanho da pilha
-        else:  # Comportamento da fila (FIFO)
-            if self.esta_vazia():  # Caso especial: fila vazia
-                self.frente = novo_no  # O novo nó será o primeiro nó
-                self.tras = novo_no  # O novo nó também será o último nó
+        new_node = Node(value)  # Creates a new node with the given value
+        if self.type == "stack":  # Stack behavior (LIFO)
+            new_node.next = self.front  # The next node of the new node will be the current top
+            self.front = new_node  # Updates the top to the new node
+            self.size += 1  # Increments the size of the stack
+        else:  # Queue behavior (FIFO)
+            if self.is_empty():  # Special case: empty queue
+                self.front = new_node  # The new node will be the first node
+                self.rear = new_node  # The new node will also be the last node
             else:
-                self.tras.proximo = novo_no  # Adiciona o novo nó ao final da fila
-                self.tras = novo_no  # Atualiza a referência para o último nó
+                self.rear.next = new_node  # Adds the new node to the end of the queue
+                self.rear = new_node  # Updates the reference to the last node
 
-    def tirar(self):
+    def remove(self):
         """
-        Remove e retorna o elemento na frente da estrutura.
+        Removes and returns the element at the front of the structure.
 
-        Retorno:
-        - Valor removido ou None se a estrutura estiver vazia.
+        Return:
+        - Removed value or None if the structure is empty.
         """
-        if self.esta_vazia():  # Verifica se a estrutura está vazia
+        if self.is_empty():  # Checks if the structure is empty
             return None
         
-        valor_removido = self.frente.valor  # Armazena o valor do elemento a ser removido
-        self.frente = self.frente.proximo  # Move a referência da frente para o próximo nó
+        removed_value = self.front.value  # Stores the value of the element to be removed
+        self.front = self.front.next  # Moves the front reference to the next node
 
-        if self.tipo == "pilha":  # Comportamento da pilha (LIFO)
-            self.tamanho -= 1  # Decrementa o tamanho da pilha
-            return valor_removido
-        else:  # Comportamento da fila (FIFO)
-            if self.frente is None:  # Caso especial: fila fica vazia após a remoção
-                self.tras = None  # Remove a referência ao último nó
-            return valor_removido
+        if self.type == "stack":  # Stack behavior (LIFO)
+            self.size -= 1  # Decreases the size of the stack
+            return removed_value
+        else:  # Queue behavior (FIFO)
+            if self.front is None:  # Special case: queue becomes empty after removal
+                self.rear = None  # Removes the reference to the last node
+            return removed_value
 
-    def esta_vazia(self):
+    def is_empty(self):
         """
-        Verifica se a estrutura está vazia.
+        Checks if the structure is empty.
 
-        Retorno:
-        - True se a estrutura estiver vazia, False caso contrário.
+        Return:
+        - True if the structure is empty, False otherwise.
         """
-        return self.frente is None
+        return self.front is None
 
-    def ver_primeiro_elemento(self):
+    def view_first_element(self):
         """
-        Retorna o elemento no topo (pilha) ou na frente (fila) sem removê-lo.
+        Returns the element at the top (stack) or at the front (queue) without removing it.
 
-        Retorno:
-        - Valor do primeiro elemento ou mensagem informativa se estiver vazia.
+        Return:
+        - Value of the first element or informative message if empty.
         """
-        if self.esta_vazia():  # Verifica se a estrutura está vazia
-            return "Não há nenhum elemento."
-        return self.frente.valor  # Retorna o valor do elemento na frente
+        if self.is_empty():  # Checks if the structure is empty
+            return "There is no element."
+        return self.front.value  # Returns the value of the element at the front
 
 
-# Exemplo de uso como PILHA
-hibrida = Hibrida("pilha")  # Cria uma estrutura do tipo pilha
-hibrida.colocar(1)  # Adiciona o elemento 1 ao topo da pilha
-hibrida.colocar(2)  # Adiciona o elemento 2 ao topo da pilha
-hibrida.colocar(3)  # Adiciona o elemento 3 ao topo da pilha
-hibrida.tirar()  # Remove o elemento do topo (3)
-hibrida.tirar()  # Remove o elemento do topo (2)
-print(f"Pilha: o elemento do topo é {hibrida.ver_primeiro_elemento()}")  # Mostra o elemento restante no topo (1)
+# Example of usage as a STACK
+hybrid = Hybrid("stack")  # Creates a structure of type stack
+hybrid.add(1)  # Adds element 1 to the top of the stack
+hybrid.add(2)  # Adds element 2 to the top of the stack
+hybrid.add(3)  # Adds element 3 to the top of the stack
+hybrid.remove()  # Removes the element from the top (3)
+hybrid.remove()  # Removes the element from the top (2)
+print(f"Stack: the top element is {hybrid.view_first_element()}")  # Shows the remaining element at the top (1)
 
-# Exemplo de uso como FILA
-hibrida = Hibrida("fila")  # Cria uma estrutura do tipo fila
-hibrida.colocar(1)  # Adiciona o elemento 1 à fila
-hibrida.colocar(2)  # Adiciona o elemento 2 à fila
-hibrida.colocar(3)  # Adiciona o elemento 3 à fila
-hibrida.tirar()  # Remove o elemento na frente da fila (1)
-hibrida.tirar()  # Remove o próximo elemento na frente da fila (2)
-print(f"Fila: o elemento da frente é {hibrida.ver_primeiro_elemento()}")  # Mostra o elemento restante na frente (3)
+# Example of usage as a QUEUE
+hybrid = Hybrid("queue")  # Creates a structure of type queue
+hybrid.add(1)  # Adds element 1 to the queue
+hybrid.add(2)  # Adds element 2 to the queue
+hybrid.add(3)  # Adds element 3 to the queue
+hybrid.remove()  # Removes the element at the front of the queue (1)
+hybrid.remove()  # Removes the next element at the front of the queue (2)
+print(f"Queue: the front element is {hybrid.view_first_element()}")  # Shows the remaining element at the front (3)
