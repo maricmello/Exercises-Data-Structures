@@ -5,10 +5,10 @@ This repository contains codes developed during **Data Structures** classes. The
 ## 🚀 Repository Content
 
 ### 📝 Files and Implementations
-- **Hibrida.py** – Implementation of a hybrid data structure.
-- **HistoricoNavegacao.py** – Simulation of a browsing history.
-- **ListaEncadeadaIteravel.py** – Implementation of an iterable linked list.
-- **ListaCircular.py** – Implementation of a circular linked list.
+- **Hybrid.py** – Implementation of a hybrid data structure.
+- **NavigationHistory.py** – Simulation of a browsing history.
+- **LinkedList.py.py** – Implementation of an iterable linked list.
+- **CircularList.py** – Implementation of a circular linked list.
 
 ## 🔧 Technologies Used
 ```bash
