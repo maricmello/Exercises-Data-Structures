@@ -7,7 +7,7 @@ This repository contains codes developed during **Data Structures** classes. The
 ### 📝 Files and Implementations
 - **Hybrid.py** – Implementation of a hybrid data structure.
 - **NavigationHistory.py** – Simulation of a browsing history.
-- **LinkedList.py.py** – Implementation of an iterable linked list.
+- **LinkedList.py** – Implementation of an iterable linked list.
 - **CircularList.py** – Implementation of a circular linked list.
 
 ## 🔧 Technologies Used
